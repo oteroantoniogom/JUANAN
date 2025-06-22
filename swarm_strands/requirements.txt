@@ -1,0 +1,9 @@
+strands-agents
+chromadb
+pymupdf4llm
+tensorflow
+scikit-learn
+nibabel
+langchain-docling
+langchain-chroma
+langchain-community
