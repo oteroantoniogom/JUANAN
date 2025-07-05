@@ -1,71 +1,39 @@
 from strands import Agent
 from strands.tools import tool
 import json
-import os
 import logging
-import re
 
 from src.config.config import strands_model_mini
-from src.config.prompts import report_system_prompt
-from src.tools.file_system_tools import write_file_to_local, read_file_from_local
-from src.tools.report_pdf_agent import generate_pdf_from_report
+from src.config.prompts import planner_system_prompt
 
-# logger ya configurado en main
+# logger ya configurado en main, pero lo importamos aquí
 logger = logging.getLogger(__name__)
 
 @tool()
-def report_agent(
-    patient_identifier: str,
-    classification: str,
-    segmentation: str,
-    knowledge: str,
-    triage: str
-) -> str:
+def planner_agent(query: str) -> str:
     """
-    Genera un reporte médico para un paciente en base al nombre del paciente,
-    información recuperada a través de RAG de la base de conocimiento,
-    la clasificación y segmentación de las imágenes MRI y el triaje automático.
+    Invoca al Planner agent para obtener un plan a partir de la petición del usuario.
 
     Args:
-        - patient_identifier (str): El nombre del paciente en formato Nombre_Apellido1_Apellido2 o Nombre_Apellido1.
-        - classification (str): Resultado de la clasificación de las imágenes MRI.
-        - segmentation (str): Resultado de la segmentación de las imágenes MRI.
-        - knowledge (str): Información recuperada a través de RAG de la base de conocimiento.
-        - triage (str): Resultado del triaje automático.
-    
+        query (str): La petición o descripción de tarea del usuario.
+
     Returns:
-        JSON con resumen y ruta de descarga del PDF
+        str: Plan generado por el Planner agent como cadena.
     """
     try:
-        agent = Agent(
+        agent_planner = Agent(
             model=strands_model_mini,
-            tools=[
-                read_file_from_local,
-                write_file_to_local,
-                generate_pdf_from_report
-            ],
-            system_prompt=report_system_prompt
+            tools=[],  # no tools para el planner puro
+            system_prompt=planner_system_prompt
         )
-        result = agent(patient_identifier)
 
-        # intentar capturar el nombre real del PDF
-        match = re.search(r"([\w\-]+\.pdf)", result)
-        pdf_filename = match.group(1) if match else None
+        result = str(agent_planner(query))
 
-        logger.info(f"✅ Informe clínico generado y validado para {patient_identifier}. "
-                    f"Disponible en el archivo: {pdf_filename}")
+        # registrar resumen humano-legible
+        logger.info(f"📝 Plan propuesto por Planner: {result}")
 
-        return json.dumps({
-            "summary": f"✅ Informe clínico generado y validado para {patient_identifier}.",
-            "pdf_path": f"/download/{pdf_filename}" if pdf_filename else None
-        })
+        return result
+
     except Exception as e:
-        logger.error(f"❌ Error en report_agent: {e}")
-        return json.dumps({
-            "patient_identifier": patient_identifier,
-            "classification": classification,
-            "segmentation": segmentation,
-            "knowledge": knowledge,
-            "triage": triage,
-            "error": str(e)
-        })
+        logger.error(f"❌ Error en planner_agent: {e}")
+        return json.dumps({"error": str(e)})
