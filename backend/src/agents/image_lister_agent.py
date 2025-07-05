@@ -1,9 +1,13 @@
 from strands import Agent
 from strands.tools import tool
 import json
+import logging
 from src.config.config import strands_model_mini
 from src.config.prompts import image_lister_system_prompt
 from src.tools.file_system_tools import list_files_in_dir, write_file_to_local
+
+# inicializar logger
+logger = logging.getLogger(__name__)
 
 @tool()
 def image_lister_agent(patient_identifier: str) -> str:
@@ -27,11 +31,18 @@ def image_lister_agent(patient_identifier: str) -> str:
             tools=[
                 list_files_in_dir,
                 write_file_to_local,
-                ],
+            ],
             system_prompt=image_lister_system_prompt
         )
-        return lister_agent(patient_identifier)
+        result = lister_agent(patient_identifier)
+
+        # resumen humano al progreso.txt
+        logger.info(f"🖼️ Resumen (ImageLister): imágenes listadas para {patient_identifier}. Resultado crudo: {result}")
+
+        return result
+
     except Exception as e:
+        logger.error(f"❌ Resumen (ImageLister): fallo listando imágenes para {patient_identifier} - {str(e)}")
         return json.dumps({
             "patient_identifier": patient_identifier,
             "pictures": [],
