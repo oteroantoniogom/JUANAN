@@ -1,0 +1,8 @@
+2025-07-05 13:43:08,990 - INFO - initializing tracer
+2025-07-05 13:43:09,010 - INFO - endpoint=<https://cloud.langfuse.com/api/public/otel/v1/traces> | OTLP exporter configured with endpoint
+2025-07-05 13:43:18,046 - INFO - Creating Strands MetricsClient
+2025-07-05 13:43:18,913 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-07-05 13:43:20,002 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-07-05 13:43:22,102 - INFO - 📝 Plan propuesto por Planner: Saludo recibido, pero no se ha especificado una tarea concreta. Por favor, indique qué desea realizar (por ejemplo: clasificar imágenes de MRI, segmentar imágenes, consultar historial clínico, evaluar urgencia o un flujo completo para un paciente) o proporcione el nombre del paciente para proceder con el plan correspondiente.
+
+2025-07-05 13:43:23,225 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
