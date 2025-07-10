@@ -1,6 +1,6 @@
 <p align="center">
+    <img src="backend/data/logos/1.png" alt="Logo" width="200"/>
   <img src="backend/data/logos/chatbot.png" alt="chatbot" width="400"/>
-  <img src="backend/data/logos/1.png" alt="Logo" width="400"/>
 </p>
 
 # SWARM de Agentes para Asistencia Médica con Inteligencia Artificial
@@ -18,6 +18,9 @@ Este proyecto desarrolla un asistente virtual avanzado para profesionales médic
 https://github.com/user-attachments/assets/523f0122-d95d-48d9-86c2-e75c922c4a6d
 
 
+## EJEMPLO REPORTE AUTOGENERADO
+<img width="553" height="778" alt="Captura de pantalla 2025-07-10 190842" src="https://github.com/user-attachments/assets/4709739e-dc39-44ff-96ee-e7a93174441a" />
+<img width="550" height="781" alt="Captura de pantalla 2025-07-10 190901" src="https://github.com/user-attachments/assets/614b1235-474f-408e-ad1f-0148caaee0eb" />
 
 ### Funcionalidades Clave
 
